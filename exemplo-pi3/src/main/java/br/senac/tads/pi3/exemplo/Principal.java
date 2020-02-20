@@ -23,6 +23,7 @@ public class Principal {
             System.out.println("Valor i: " + i);
         }
         vetor();
+        impressao();
     }
     
     static int[] vetor(){
@@ -36,6 +37,12 @@ public class Principal {
             System.out.println(vetor[i]);
         }
         return vetor;
+    }
+    
+    static void impressao(){
+        for(int i = 0; i < 5 ; i++){
+            System.out.println("Foram realizadas " +i + " alterações até o momento");
+        }
     }
     
 }
