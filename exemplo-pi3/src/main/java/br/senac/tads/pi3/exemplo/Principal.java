@@ -16,6 +16,9 @@ public class Principal {
         System.out.println("================================================================================");
         System.out.println("Exemplo PI3");
         System.out.println("================================================================================");
+        for(int i = 0; i < 20 ; i++){
+            System.out.println("Hello World");
+        }
         for (int i = 0; i < 100; i++) {
             System.out.println("Valor i: " + i);
         }
