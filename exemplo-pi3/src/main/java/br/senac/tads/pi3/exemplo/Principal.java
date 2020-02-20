@@ -12,7 +12,13 @@ package br.senac.tads.pi3.exemplo;
 public class Principal {
     
     public static void main(String[] args) {
+
+        System.out.println("================================================================================");
         System.out.println("Exemplo PI3");
+        System.out.println("================================================================================");
+        for (int i = 0; i < 100; i++) {
+            System.out.println("Valor i: " + i);
+        }
     }
     
 }
