@@ -22,6 +22,20 @@ public class Principal {
         for (int i = 0; i < 100; i++) {
             System.out.println("Valor i: " + i);
         }
+        vetor();
+    }
+    
+    static int[] vetor(){
+        int[] vetor = new int[7];
+        
+        for(int i = 0; i < vetor.length; i++){
+            vetor[i] = i;
+        }
+        
+        for(int i = 0; i < vetor.length ; i++){
+            System.out.println(vetor[i]);
+        }
+        return vetor;
     }
     
 }
