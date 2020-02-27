@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.senac.tads.pi3.exemplo;
+package br.senac.tads.pi3.exemplosjdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ public class ExemploDAO {
 
     public void criarTabela() {
         String sql = "CREATE TABLE IF NOT EXISTS exemplo (id INT PRIMARY KEY auto_increment, valor VARCHAR(255))";
-        try (Connection conn = ConnectionUtil.obterConexaoBD(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConnectionUtilH2.obterConexao(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -35,7 +35,7 @@ public class ExemploDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            conn = ConnectionUtil.obterConexaoBD();
+            conn = ConnectionUtilH2.obterConexao();
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -74,7 +74,7 @@ public class ExemploDAO {
         String sql = "SELECT valor FROM exemplo";
         // CÓDIGO ABAIXO SOMENTE PARA JAVA 7 OU SUPERIOR
         List<String> resultados = new ArrayList<>();
-        try (Connection conn = ConnectionUtil.obterConexaoBD();
+        try (Connection conn = ConnectionUtilH2.obterConexao();
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -90,7 +90,7 @@ public class ExemploDAO {
     public int salvarComStatement(String valor) {
         String sql = "INSERT INTO exemplo (valor) VALUES ('" + valor + "')";
         int resultados = 0;
-        try (Connection conn = ConnectionUtil.obterConexaoBD();
+        try (Connection conn = ConnectionUtilH2.obterConexao();
                 Statement stmt = conn.createStatement()) {
             resultados = stmt.executeUpdate(sql);
         } catch (SQLException ex) {
@@ -102,7 +102,7 @@ public class ExemploDAO {
     public int salvarComPreparedStatement(String valor) {
         String sql = "INSERT INTO exemplo (valor) VALUES (?)";
         int resultados = 0;
-        try (Connection conn = ConnectionUtil.obterConexaoBD();
+        try (Connection conn = ConnectionUtilH2.obterConexao();
                 PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, valor);
             resultados = stmt.executeUpdate();
@@ -116,7 +116,7 @@ public class ExemploDAO {
         String sql = "INSERT INTO exemplo (valor) VALUES (?)";
         int resultados = 0;
         int idGerado = -1;
-        try (Connection conn = ConnectionUtil.obterConexaoBD()) {
+        try (Connection conn = ConnectionUtilH2.obterConexao()) {
             // DESLIGAR O AUTO COMMIT
             conn.setAutoCommit(false);
 
@@ -125,11 +125,13 @@ public class ExemploDAO {
                 stmt.setString(1, valor);
                 resultados = stmt.executeUpdate();
                 try (ResultSet chaves = stmt.getGeneratedKeys()) {
+
                     if (chaves.next()) {
                         idGerado = chaves.getInt(1);
 
                         // USA O ID GERADO PARA DEMAIS OPERACOES
                     }
+
                 }
                 // EFETIVA TODAS AS OPERAÇÕES REALIZADAS
                 conn.commit();
