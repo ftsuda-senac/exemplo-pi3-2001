@@ -10,13 +10,13 @@ package br.senac.tads.pi3.exemplo;
  * @author fernando.tsuda
  */
 public class Principal {
-    
+
     public static void main(String[] args) {
 
         System.out.println("================================================================================");
         System.out.println("Exemplo PI3");
         System.out.println("================================================================================");
-        for(int i = 0; i < 20 ; i++){
+        for (int i = 0; i < 20; i++) {
             System.out.println("Hello World");
         }
         for (int i = 0; i < 100; i++) {
@@ -25,24 +25,24 @@ public class Principal {
         vetor();
         impressao();
     }
-    
-    static int[] vetor(){
+
+    static int[] vetor() {
         int[] vetor = new int[7];
-        
-        for(int i = 0; i < vetor.length; i++){
+
+        for (int i = 0; i < vetor.length; i++) {
             vetor[i] = i;
         }
-        
-        for(int i = 0; i < vetor.length ; i++){
+
+        for (int i = 0; i < vetor.length; i++) {
             System.out.println(vetor[i]);
         }
         return vetor;
     }
-    
-    static void impressao(){
-        for(int i = 0; i < 5 ; i++){
-            System.out.println("Foram realizadas " +i + " alterações até o momento");
+
+    static void impressao() {
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Foram realizadas " + i + " alterações até o momento");
         }
     }
-    
+
 }

@@ -20,7 +20,6 @@ public class ConnectionUtil {
      *
      * @return objeto {@link Connection}
      * @throws SQLException
-     * @throws ClassNotFoundException
      */
     public static final Connection obterConexaoBD() throws SQLException {
         // 1A) Declarar o driver JDBC de acordo com o Banco de dados usado
