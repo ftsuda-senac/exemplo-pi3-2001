@@ -69,6 +69,7 @@ public class ContatoDao {
                     }
                 }
                 c.setTelefones(listaTelefones);
+                resultados.add(c);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -98,9 +99,30 @@ public class ContatoDao {
                         // USA O ID GERADO PARA DEMAIS OPERACOES
                         
                         // SALVAR EMAILS
-                        
-                        // SALVAR TELEFONES
+                        String sqlEmail = "INSERT INTO email (endereco, tipo, id_contato) VALUES (?,?,?)";
+                        if (c.getEmails() != null && !c.getEmails().isEmpty()) {
+                            for (Email email : c.getEmails()) {
+                                try (PreparedStatement stmtEmail = conn.prepareStatement(sqlEmail)) {
+                                    stmtEmail.setString(1, email.getEndereco());
+                                    stmtEmail.setString(2, email.getTipo());
+                                    stmtEmail.setInt(3, idGerado);
+                                    int resultadosEmail = stmtEmail.executeUpdate();
+                                }
+                            }
+                        }
 
+                        // SALVAR TELEFONES
+                        String sqlTelefone = "INSERT INTO telefone (numero, tipo, id_contato) VALUES (?,?,?)";
+                        if (c.getTelefones() != null && !c.getTelefones().isEmpty()) {
+                            for (Telefone telefone : c.getTelefones()) {
+                                try (PreparedStatement stmtTelefone = conn.prepareStatement(sqlTelefone)) {
+                                    stmtTelefone.setString(1, telefone.getNumero());
+                                    stmtTelefone.setString(2, telefone.getTipo());
+                                    stmtTelefone.setInt(3, idGerado);
+                                    int resultadosTelefone = stmtTelefone.executeUpdate();
+                                }
+                            }
+                        }
                     }
                 }
                 // EFETIVA TODAS AS OPERAÇÕES REALIZADAS

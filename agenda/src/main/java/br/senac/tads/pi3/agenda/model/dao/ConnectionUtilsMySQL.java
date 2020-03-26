@@ -32,13 +32,13 @@ public class ConnectionUtilsMySQL {
 
         // 1B) Abrir a conexão
         Connection conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3307/agendabd?"
+                "jdbc:mysql://localhost:3306/agendabd?"
                 + "useUnicode=yes&"
                 + "characterEncoding=UTF-8&"
                 + "useTimezone=true&"
                 + "serverTimezone=UTC",
-                "root", // Usuário de conexão
-                ""); // Senha
+                "tads", // Usuário de conexão
+                "tads1234"); // Senha
         return conn;
     }
 }

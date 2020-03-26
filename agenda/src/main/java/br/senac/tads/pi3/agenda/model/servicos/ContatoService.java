@@ -5,6 +5,7 @@
  */
 package br.senac.tads.pi3.agenda.model.servicos;
 
+import br.senac.tads.pi3.agenda.model.dao.ContatoDao;
 import br.senac.tads.pi3.agenda.model.entidades.Contato;
 import br.senac.tads.pi3.agenda.model.entidades.Email;
 import br.senac.tads.pi3.agenda.model.entidades.Telefone;
@@ -20,9 +21,11 @@ import java.util.List;
  * @author fernando.tsuda
  */
 public class ContatoService {
+    
+    private ContatoDao dao = new ContatoDao();
 
     public List<Contato> listar() {
-        return null;
+        return dao.listar();
     }
 
     public List<Contato> pesquisar(String termo) {
@@ -30,7 +33,9 @@ public class ContatoService {
     }
 
     public void incluir(Contato c) {
-
+        if (c != null && c.getNome() != null && c.getApelido() != null) {
+            dao.incluir(c);
+        }
     }
 
     public void excluir(Integer id) {

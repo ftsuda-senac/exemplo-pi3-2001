@@ -161,6 +161,7 @@ public class AgendaForm extends javax.swing.JFrame {
     );
     Contato c = new Contato();
     c.setNome(jTextField1.getText());
+    c.setApelido(jTextField1.getText());
     c.setDataNascimento(dataNascimento);
     
     Email email = new Email();
@@ -175,6 +176,8 @@ public class AgendaForm extends javax.swing.JFrame {
     c.setTelefones(Arrays.asList(tel));
     
     service.incluir(c);
+    
+    listarContatos();
 
   }//GEN-LAST:event_jButton1ActionPerformed
 
