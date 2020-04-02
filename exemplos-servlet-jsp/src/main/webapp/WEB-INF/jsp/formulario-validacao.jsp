@@ -22,6 +22,7 @@
                 width: 100%;
             }
         </style>
+        <script src="${pageContext.request.contextPath}/teste-js.js"></script>
     </head>
     <body>
         <main>
