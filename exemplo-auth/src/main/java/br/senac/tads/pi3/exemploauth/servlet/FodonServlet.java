@@ -28,5 +28,4 @@ public class FodonServlet extends HttpServlet {
                 .forward(request, response);
     }
 
-
 }

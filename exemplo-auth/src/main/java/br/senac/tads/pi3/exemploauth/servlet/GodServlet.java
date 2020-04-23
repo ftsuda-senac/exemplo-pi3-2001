@@ -28,5 +28,4 @@ public class GodServlet extends HttpServlet {
                 .forward(request, response);
     }
 
-
 }

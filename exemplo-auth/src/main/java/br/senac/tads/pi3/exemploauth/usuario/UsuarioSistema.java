@@ -15,9 +15,9 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class UsuarioSistema implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private String username;
+    private String username;
 
     private String nomeCompleto;
 

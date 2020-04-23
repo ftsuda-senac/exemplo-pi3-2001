@@ -18,7 +18,7 @@
                     <ul>
                         <c:forEach items="${sessionScope.usuario.papeis}" var="pap">
                             <li><c:out value="${pap.nome}" /></li>
-                            </c:forEach>
+                        </c:forEach>
                     </ul>
                     <ul>
                         <c:if test="${sessionScope.usuario.verificarPapel('PEAO')}">
