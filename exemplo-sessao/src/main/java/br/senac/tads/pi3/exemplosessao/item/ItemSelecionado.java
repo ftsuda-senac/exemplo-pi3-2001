@@ -14,16 +14,16 @@ import java.time.LocalDateTime;
  */
 public class ItemSelecionado implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Item item;
+    private Item item;
 
     private LocalDateTime dataHoraInclusao;
-    
+
     public ItemSelecionado() {
-        
+
     }
-    
+
     public ItemSelecionado(Item item) {
         this.item = item;
         this.dataHoraInclusao = LocalDateTime.now();

@@ -15,40 +15,40 @@ import br.senac.tads.pi3.exemplosessao.item.ItemSelecionado;
 import br.senac.tads.pi3.exemplosessao.item.ItemService;
 import br.senac.tads.pi3.exemplosessao.item.ItemServiceMockImpl;
 
-@WebServlet(name = "ExemploSessaoErradoServlet", urlPatterns = { "/exemplo-sessao-errado" })
+@WebServlet(name = "ExemploSessaoErradoServlet", urlPatterns = {"/exemplo-sessao-errado"})
 public class ExemploSessaoErradoServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private ItemService itemService;
+    private ItemService itemService;
 
-	private List<ItemSelecionado> itensSelecionados;
-        
-        public ExemploSessaoErradoServlet() {
-            itemService = new ItemServiceMockImpl();
-            itensSelecionados = new ArrayList<>();
-        }
+    private List<ItemSelecionado> itensSelecionados;
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setAttribute("itens", itemService.findAll());
-		request.getRequestDispatcher("/WEB-INF/jsp/exemplo-sessao-errado.jsp").forward(request, response);
-	}
+    public ExemploSessaoErradoServlet() {
+        itemService = new ItemServiceMockImpl();
+        itensSelecionados = new ArrayList<>();
+    }
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setAttribute("itens", itemService.findAll());
+        request.getRequestDispatcher("/WEB-INF/jsp/exemplo-sessao-errado.jsp").forward(request, response);
+    }
 
-		// Procura pelo item selecionado a partir do ID.
-		String idStr = request.getParameter("idItem");
-		int id = Integer.parseInt(idStr);
-		Item item = itemService.findById(id);
-		itensSelecionados.add(new ItemSelecionado(item));
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-		request.setAttribute("itensSelecionados", itensSelecionados);
-		request.setAttribute("itens", itemService.findAll());
-		request.getRequestDispatcher("/WEB-INF/jsp/exemplo-sessao-errado.jsp").forward(request, response);
-	}
+        // Procura pelo item selecionado a partir do ID.
+        String idStr = request.getParameter("idItem");
+        int id = Integer.parseInt(idStr);
+        Item item = itemService.findById(id);
+        itensSelecionados.add(new ItemSelecionado(item));
+
+        request.setAttribute("itensSelecionados", itensSelecionados);
+        request.setAttribute("itens", itemService.findAll());
+        request.getRequestDispatcher("/WEB-INF/jsp/exemplo-sessao-errado.jsp").forward(request, response);
+    }
 
 }
