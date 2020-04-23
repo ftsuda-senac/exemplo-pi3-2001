@@ -32,6 +32,7 @@ public class ExemploSessaoErradoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setAttribute("itensSelecionados", itensSelecionados);
         request.setAttribute("itens", itemService.findAll());
         request.getRequestDispatcher("/WEB-INF/jsp/exemplo-sessao-errado.jsp").forward(request, response);
     }
