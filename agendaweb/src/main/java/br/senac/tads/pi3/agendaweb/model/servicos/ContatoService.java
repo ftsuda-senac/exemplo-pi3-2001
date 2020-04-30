@@ -26,4 +26,23 @@ public class ContatoService {
         }
     }
     
+    private boolean isValid(Contato c) {
+        if (c != null && c.getNome() != null && c.getApelido() != null) {
+            return true;
+        }
+        return false;
+    }
+    
+    public void incluir(Contato c) throws AppException {
+        try {
+            if (isValid(c)) {
+                dao.incluir(c);
+            } else {
+                 throw new AppException("DADOS INVALIDOS", null);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new AppException("ERRO NA INCLUSAO DOS DADOS", e);
+        }
+    }
 }

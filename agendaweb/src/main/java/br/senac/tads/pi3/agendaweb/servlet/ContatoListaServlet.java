@@ -37,7 +37,7 @@ public class ContatoListaServlet extends HttpServlet {
             String msg = e.getMessage();
             request.setAttribute("msgErro", msg);
         }
-        request.getRequestDispatcher("/WEB-INF/jsp/contato-lista.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/lista-template.jsp").forward(request, response);
     }
 
 }

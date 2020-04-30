@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,6 +71,66 @@ public class ContatoDao {
             }
         }
         return contatos;
+    }
+    
+    public void incluir(Contato c) throws SQLException {
+        String sql = "INSERT INTO contato (nome, apelido, data_nascimento) VALUES (?,?,?)";
+        try (Connection conn = ConnectionUtilsMySQL.obterConexaoBD()) {
+            // DESLIGAR AUTO-COMMIT -> POSSIBILITAR DESFAZER OPERAÇÕES NO BD CASO OCORRA ERRO
+            conn.setAutoCommit(false);
+
+            // ADICIONAR O Statement.RETURN_GENERATED_KEYS PARA RECUPERAR ID GERADO NO BD
+            try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                stmt.setString(1, c.getNome());
+                stmt.setString(2, c.getApelido());
+                stmt.setDate(3, java.sql.Date.valueOf(c.getDataNascimento()));
+
+                int resultados = stmt.executeUpdate();
+
+                try (ResultSet resultadoChaves = stmt.getGeneratedKeys()) {
+                    
+                    while (resultadoChaves.next()) {
+                        // RECUPERAR ID GERADO DO CONTATO PARA DEMAIS OPERACOES
+                        Integer idGerado = resultadoChaves.getInt(1);
+
+                        // SALVAR TELEFONES
+                        String sqlTelefone = "INSERT INTO telefone (numero, tipo, id_contato) VALUES (?,?,?)";
+                        if (c.getTelefones() != null && !c.getTelefones().isEmpty()) {
+                            for (Telefone t : c.getTelefones()) {
+                                try (PreparedStatement stmtTelefone = conn.prepareStatement(sqlTelefone)) {
+                                    stmtTelefone.setString(1, t.getNumero());
+                                    stmtTelefone.setString(2, t.getTipo());
+                                    stmtTelefone.setInt(3, idGerado);
+                                    int resultadosTelefone = stmtTelefone.executeUpdate();
+                                }
+                            }
+                        }
+
+                        // SALVAR E-MAILS
+                        String sqlEmail = "INSERT INTO email (endereco, tipo, id_contato) VALUES (?,?,?)";
+                        if (c.getEmails() != null && !c.getEmails().isEmpty()) {
+                            for (Email e : c.getEmails()) {
+                                try (PreparedStatement stmtEmail = conn.prepareStatement(sqlEmail)) {
+                                    stmtEmail.setString(1, e.getEndereco());
+                                    stmtEmail.setString(2, e.getTipo());
+                                    stmtEmail.setInt(3, idGerado);
+                                    int resultadosEmail = stmtEmail.executeUpdate();
+                                }
+                            }
+                        }
+                    }
+                }
+                // EFETIVAR NO BD TODAS AS OPERACOES REALIZADAS
+                conn.commit();
+            } catch (Exception e) {
+                // DESFAZ TODAS AS OPERAÇÕES REALIDAS CASO OCORRA ALGUM ERRO NA LÓGICA ACIMA.
+                conn.rollback();
+                throw new SQLException(e);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
     
 }
