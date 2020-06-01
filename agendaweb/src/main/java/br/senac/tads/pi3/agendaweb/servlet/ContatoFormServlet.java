@@ -28,10 +28,12 @@ public class ContatoFormServlet extends HttpServlet {
         if (urlInformada.endsWith("/novo")) {
             // Significa que usuário está abrindo formulário para inclusão.
             request.setAttribute("acao", "incluir");
+            request.setAttribute("acaoUrl", request.getContextPath() + "/salvar-novo");
         } else {
             // Significa que usuário está abrindo formulário para edição.
             request.setAttribute("acao", "alterar");
             String idStr = request.getParameter("id");
+            request.setAttribute("acaoUrl", request.getContextPath() + "/alterar");
             // TODO: Consultar o contato pelo ID e levar para JSP com o request.setAttribute
         }
         request.getRequestDispatcher("/WEB-INF/jsp/form-template.jsp").forward(request, response);
